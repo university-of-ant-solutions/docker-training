@@ -18,5 +18,5 @@ Status: Downloaded newer image for hello-world:latest
 
 ### Next Steps
 
-For the next step in the tutorial, head over to [1.0 Running an alpine container`](http://training.play-with-docker.com/alpine)
+For the next step in the tutorial, head over to [1.0 Running an alpine container](http://training.play-with-docker.com/alpine)
 
