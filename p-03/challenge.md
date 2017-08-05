@@ -65,3 +65,11 @@ $ docker container port static-site
 If you were running [Docker for Mac](https://docs.docker.com/docker-for-mac/), [Docker for Windows](https://docs.docker.com/docker-for-windows/), or Docker on Linux, you would see your app at http://[YourDockerIP]:32769.
 
 You can also run a second webserver at the same time, specifying a custom host port mapping to the container’s webserver.
+
+```
+$ docker container run --name static-site-2 -e AUTHOR="Your Name" -d -p 8888:80 seqvence/static-site
+6f58e9fa67f80b2fa739d98a177b7b3b2dd023a098b42a7d85ac4293be6a0f51
+```
+You should see your website running [HERE](http://training.play-with-docker.com/)
+
+
