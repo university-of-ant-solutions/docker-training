@@ -231,5 +231,7 @@ a multi-service app running on a Swarm
 - A stack can:
 
 be deployed from the commandline
+
 can use the compose file format to deploy
+
 can be used to manage services over multiple nodes
