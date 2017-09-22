@@ -19,4 +19,13 @@ Or for a full list of individual labs on this site, check out our labs page
 
 [Full list of individual labs](http://training.play-with-docker.com/alacart)
 
-http://training.play-with-docker.com/helloworld/
+- http://training.play-with-docker.com/helloworld/
+
+- https://www.lifewire.com/ping-command-2618099
+Ping command
+
+The ping command is a Command Prompt command used to test the ability of the source computer to reach a specified destination computer. The ping command is usually used as a simple way verify that a computer can communicate over the network with another computer or network device.
+
+The ping command operates by sending Internet Control Message Protocol (ICMP) Echo Request messages to the destination computer and waiting for a response.
+
+How many of those responses are returned, and how long it takes for them to return, are the two major pieces of information that the ping command provides.
