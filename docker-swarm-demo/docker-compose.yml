@@ -20,6 +20,9 @@ services:
       - mongo
       - redis
     image: registry.gitlab.com/particle4dev/node-boilerplate:1.2.0
+    secrets:
+      - source: secret_key
+        target: /secret.txt
     networks:
       - back_tier
     command: npm run serve
@@ -55,6 +58,10 @@ services:
 
 volumes:
   mongo_data:
+
+secrets:
+  secret_key:
+    file: ./secret.txt
 
 configs:
   nginx_site_enabled_config:
