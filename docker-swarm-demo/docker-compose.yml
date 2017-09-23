@@ -4,22 +4,32 @@ services:
   mongo:
     image: mongo:3.2
     volumes:
-      - mongo_data:/data
+      - type: volume
+        source: mongo_data
+        target: /data/db
     networks:
       - back_tier
     restart: always
+    deploy:
+      placement:
+        constraints:
+        - node.hostname == slave1
 
   redis:
     image: redis:3.2.0
     networks:
       - back_tier
     restart: always
+    deploy:
+      placement:
+        constraints:
+        - node.hostname == slave2
 
   server:
-    depends_on:
-      - mongo
-      - redis
-    image: registry.gitlab.com/particle4dev/node-boilerplate:1.2.0
+    # depends_on:
+      # - mongo
+      # - redis
+    image: registry.gitlab.com/particle4dev/node-boilerplate:1.2.1
     secrets:
       - source: secret_key
         target: /secret.txt
