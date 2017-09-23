@@ -1,0 +1,83 @@
+version: '3.3'
+
+services:
+  mongo:
+    image: mongo:3.2
+    volumes:
+      - type: volume
+        source: mongo_data
+        target: /data/db
+    networks:
+      - back_tier
+    restart: always
+    deploy:
+      placement:
+        constraints:
+        - node.hostname == slave1
+
+  redis:
+    image: redis:3.2.0
+    networks:
+      - back_tier
+    restart: always
+    deploy:
+      placement:
+        constraints:
+        - node.hostname == slave2
+
+  server:
+    # depends_on:
+      # - mongo
+      # - redis
+    image: registry.gitlab.com/particle4dev/node-boilerplate:1.2.1
+    secrets:
+      - source: secret_key
+        target: /secret.txt
+    networks:
+      - back_tier
+    command: npm run serve
+    restart: always
+    environment:
+      - NODE_ENV=production
+      - MONGO_URL=mongodb://mongo/tests
+      - REDIS_URL=redis://redis:6379
+    deploy:
+      replicas: 3
+
+  nginx:
+    image: particle4dev/docker-nginx-boilerplate:latest
+    #volumes:
+      # - ${PWD}/sites-enabled:/etc/nginx/sites-enabled:rw
+      # - ${PWD}/sites-available:/etc/nginx/sites-available:rw
+      # - ${PWD}/nginx-logs:/var/log/nginx
+      # - ${PWD}/nginx-cache:/tmp/nginx/cache
+    configs:
+      - source: nginx_site_enabled_config
+        target: /etc/nginx/sites-enabled/default
+    networks:
+      - back_tier
+    ports:
+      - target: 80
+        published: 80
+        protocol: tcp
+        mode: ingress
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+
+volumes:
+  mongo_data:
+
+secrets:
+  secret_key:
+    file: ./secret.txt
+
+configs:
+  nginx_site_enabled_config:
+    file: ${PWD}/sites-enabled/default
+
+networks:
+  back_tier:
+    driver: overlay
+
